@@ -1,3 +1,4 @@
+var map = {};
 
 function getURL(badurl){
   // strip protocol
@@ -23,6 +24,25 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
           console.log('Inside executeScript '+JSON.stringify(tab.url))
           var host = getURL(tab.url)
-          alert(host)
+          if(host != undefined) {
+            var hits = 0;
+            chrome.storage.local.get(host, function (result) {
+              console.log(host,result[host]);
+              var value = result[host];
+              if(value >= 1){
+                hits = value
+              }
+              else{
+                hits = 0
+              }
+              //alert(host+ " ++ "+hits)
+              updateStorage(host,hits+1);
+              //console.log('myKey', obj);
+            });
         }
+      }
 });
+
+function updateStorage(host,value){
+  chrome.storage.local.set({[host]:value});
+}
