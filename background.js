@@ -1,5 +1,3 @@
-var map = {};
-
 function getURL(badurl){
   // strip protocol
   badurl = stripDomain(badurl);
@@ -11,17 +9,24 @@ function stripDomain(badurl){
   if (badurl.indexOf("://") == -1)
     return badurl
   badurl = badurl.substring(badurl.indexOf("://")+3)
+  badurl = badurl.substring(0,badurl.indexOf("/"))
   badurl = badurl.split(".")
-  if(badurl.length === 2)
-    return badurl[0]
-  return badurl[1]
+  console.log('badurl is '+JSON.stringify(badurl))
+  if(badurl.length >= 2){
+    if(badurl.length === 2){
+      return badurl[0]
+    }
+    return badurl[1]
+  }
 }
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
     if (changeInfo.status != 'complete')
         return;
      else {
-
+          /*chrome.storage.local.get(null, function(results){
+            console.log("all the host urls "+ JSON.stringify(results))
+          })*/
           console.log('Inside executeScript '+JSON.stringify(tab.url))
           var host = getURL(tab.url)
           if(host != undefined) {
@@ -42,6 +47,10 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
         }
       }
 });
+
+chrome.browserAction.onClicked.addListener(function (tab){
+  console.log('inside the browser action clicked '+tab.url)
+})
 
 function updateStorage(host,value){
   chrome.storage.local.set({[host]:value});
