@@ -7,7 +7,6 @@ function handler() {
     active: true,
     currentWindow: true
   }, function(tabs) {
-  alert('clicked on popup '+tabs[0].id)
     chrome.runtime.sendMessage(
       {
         action: 'GetMap'
@@ -17,6 +16,8 @@ function handler() {
 }
 
 function setValues(info){
-  alert(JSON.stringify(info));
-  document.getElementById("tick").innerHTML = info.status
+  i = 0;
+  for(var obj in info){
+    document.getElementById("tick"+ ++i).innerHTML = info[obj].name +" : " +info[obj].count
+  }
 }

@@ -24,9 +24,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     if (changeInfo.status != 'complete')
         return;
      else {
-          /*chrome.storage.local.get(null, function(results){
-            console.log("all the host urls "+ JSON.stringify(results))
-          })*/
           console.log('Inside executeScript '+JSON.stringify(tab.url))
           var host = getURL(tab.url)
           if(host != undefined) {
@@ -42,21 +39,52 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
               }
               //alert(host+ " ++ "+hits)
               updateStorage(host,hits+1);
-              //console.log('myKey', obj);
             });
         }
       }
 });
-chrome.runtime.onMessage.addListener(function (msg, sender,response) {
-  // First, validate the message's structure
+chrome.runtime.onMessage.addListener(function (msg, sender,sendResponse) {
   console.log('in background '+JSON.stringify(msg))
   if( msg.action === 'GetMap' ) {
+
     var info = {
       status:'success'
     }
-    response(info)
+    chrome.storage.local.get(null, function (result){
+      var sortedMap = sort(result)
+      var output = prepareOutput(sortedMap,result)
+      console.log('background sorted map '+JSON.stringify(output))
+      sendResponse(output)
+    })
+    return true;
+  }
+  if( msg.action === 'DeleteMap' ) {
+    // TO - DO
   }
 });
+function prepareOutput(sortedMap, result){
+  var i = 0;
+  var output = [];
+  while(i < 5){
+    var unit = {
+      name : sortedMap[i],
+      count : result[sortedMap[i]]
+    }
+    output.push(unit)
+    i++
+  }
+  return output
+}
+
+function sort(obj){
+  var keys = []
+  for( var key in obj){
+    keys.push(key)
+  }
+  return keys.sort(function(a,b){
+    return obj[b]-obj[a]
+  })
+}
 
 
 function updateStorage(host,value){
