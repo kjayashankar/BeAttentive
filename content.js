@@ -1,10 +1,17 @@
 //alert("Content js is working");
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if( request.message === "clicked_browser_action" ) {
-      var firstHref = $("a[href^='http']").eq(0).attr("href");
+chrome.runtime.sendMessage({
+  from:    'content',
+  subject: 'showPageAction'
+});
 
-      console.log(firstHref);
-    }
+chrome.extension.onMessage.addListener(
+  function(request, sender, response) {
+    console.log(JSON.stringify(request))
+      if( request.action === 'GetMap' ) {
+        var info = {
+          status:'success'
+        }
+        response(info)
+      }
   }
 );
