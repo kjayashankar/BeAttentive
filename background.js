@@ -47,18 +47,17 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
         }
       }
 });
-chrome.runtime.onMessage.addListener(function (msg, sender) {
+chrome.runtime.onMessage.addListener(function (msg, sender,response) {
   // First, validate the message's structure
-  if ((msg.from === 'content') && (msg.subject === 'showPageAction')) {
-    // Enable the page-action for the requesting tab
-    chrome.pageAction.show(sender.tab.id);
+  console.log('in background '+JSON.stringify(msg))
+  if( msg.action === 'GetMap' ) {
+    var info = {
+      status:'success'
+    }
+    response(info)
   }
 });
 
-
-chrome.browserAction.onClicked.addListener(function (tab){
-  console.log('inside the browser action clicked '+tab.url)
-})
 
 function updateStorage(host,value){
   chrome.storage.local.set({[host]:value});

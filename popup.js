@@ -7,9 +7,8 @@ function handler() {
     active: true,
     currentWindow: true
   }, function(tabs) {
-    alert('clicked on popup '+tabs[0].id)
-
-    chrome.tabs.sendMessage(tabs[0].id,
+  alert('clicked on popup '+tabs[0].id)
+    chrome.runtime.sendMessage(
       {
         action: 'GetMap'
       },
@@ -19,4 +18,5 @@ function handler() {
 
 function setValues(info){
   alert(JSON.stringify(info));
+  document.getElementById("tick").innerHTML = info.status
 }

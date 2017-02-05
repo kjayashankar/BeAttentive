@@ -3,14 +3,23 @@
   "name": "Attention",
   "description": "Be attentive",
   "version": "0.1",
+
   "browser_action": {
     "default_icon": "specs.png",
-    "default_popup":"popup.html"
+    "default_title": "Pay Attention",
+    "default_popup": "popup.html"
   },
+
   "background": {
     "scripts": ["background.js"]
   },
 
+  "content_scripts": [{
+    "matches": [
+      "<all_urls>"
+    ],
+    "js": ["content.js"]
+  }],
   "permissions": [
     "webRequest",
     "activeTab",
@@ -18,13 +27,6 @@
     "tabs",
     "http://*/*",
     "<all_urls>"
-  ],
-  "content_scripts": [
-  {
-    "matches": [
-      "<all_urls>"
-    ],
-    "js": ["content.js"]
-  }
-]
+  ]
+
 }
