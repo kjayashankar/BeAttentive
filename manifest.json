@@ -19,7 +19,7 @@
     "matches": [
       "<all_urls>"
     ],
-    "js": ["content.js"]
+    "js": ["chart.min.js"]
   }],
   "permissions": [
     "webRequest",

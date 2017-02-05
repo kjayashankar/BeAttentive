@@ -53,19 +53,23 @@ chrome.runtime.onMessage.addListener(function (msg, sender,sendResponse) {
     chrome.storage.local.get(null, function (result){
       var sortedMap = sort(result)
       var output = prepareOutput(sortedMap,result)
-      console.log('background sorted map '+JSON.stringify(output))
+      console.log('background sorted map '+JSON.stringify(sortedMap))
       sendResponse(output)
     })
     return true;
   }
-  if( msg.action === 'DeleteMap' ) {
-    // TO - DO
+  if( msg.action === 'DelMap' ) {
+    chrome.storage.local.clear()
   }
 });
 function prepareOutput(sortedMap, result){
   var i = 0;
   var output = [];
-  while(i < 5){
+  var max = sortedMap.length
+  if(sortedMap.length > 5){
+    max = 5
+  }
+  while(i < max){
     var unit = {
       name : sortedMap[i],
       count : result[sortedMap[i]]
