@@ -22,12 +22,11 @@
     "js": ["chart.min.js"]
   }],
   "permissions": [
-    "webRequest",
     "activeTab",
     "storage",
     "tabs",
     "http://*/*",
-    "<all_urls>"
+    "https://*/*"
   ]
 
 }
