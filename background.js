@@ -69,8 +69,8 @@ function prepareOutput(sortedMap, result){
   var i = 0;
   var output = [];
   var max = sortedMap.length
-  if(sortedMap.length > 6){
-    max = 6
+  if(sortedMap.length > 5){
+    max = 5
   }
   while(i < max){
     var unit = {
@@ -80,13 +80,15 @@ function prepareOutput(sortedMap, result){
     output.push(unit)
     i++
   }
+  output.push({name:'datejay',count:result['datejay']})
   return output
 }
 
 function sort(obj){
   var keys = []
   for( var key in obj){
-    keys.push(key)
+    if(key != 'datejay')
+      keys.push(key)
   }
   return keys.sort(function(a,b){
     return obj[b]-obj[a]
