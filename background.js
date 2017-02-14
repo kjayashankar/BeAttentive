@@ -53,14 +53,14 @@ chrome.runtime.onMessage.addListener(function (msg, sender,sendResponse) {
     chrome.storage.local.get(null, function (result){
       var sortedMap = sort(result)
       var output = prepareOutput(sortedMap,result)
-      //console.log('background sorted map '+JSON.stringify(sortedMap))
+      console.log('background sorted map '+JSON.stringify(sortedMap))
       sendResponse(output)
     })
     return true;
   }
   if( msg.action === 'DelMap' ) {
     chrome.storage.local.clear()
-    window.close();
+    //window.close();
     sendResponse({"a":1})
   }
   return true
@@ -80,7 +80,11 @@ function prepareOutput(sortedMap, result){
     output.push(unit)
     i++
   }
-  output.push({name:'datejay',count:result['datejay']})
+  if(result['datejay'] != undefined){
+    output.push({name:'datejay',count:result['datejay']})
+  }
+  console.log('output '+JSON.stringify(output))
+
   return output
 }
 
