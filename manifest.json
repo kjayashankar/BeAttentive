@@ -3,7 +3,7 @@
   "name": "Attention",
   "description": "Be attentive",
   "version": "0.1",
-
+  "icons": { "128": "glasses.png" },
   "browser_action": {
     "default_icon": "specs.png",
     "default_title": "Pay Attention",
