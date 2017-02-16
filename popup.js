@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded',function(){
   document.getElementById("reset").addEventListener("click",resetHandler);
 });
 
+window.addEventListener ("load", handler, false);
+
 function resetHandler(){
   reset();
   //reset();
