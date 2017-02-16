@@ -1,9 +1,10 @@
 {
   "manifest_version": 2,
   "name": "Attention",
-  "description": "Be attentive",
-  "version": "0.1",
-  "icons": { "128": "glasses.png" },
+  "description": "Mind your web usage!",
+  "version": "0.2",
+  "icons": { "128": "glasses128.png",
+              "48": "glasses48.png"},
   "browser_action": {
     "default_icon": "specs.png",
     "default_title": "Pay Attention",
