@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Attention",
   "description": "Mind your web usage!",
-  "version": "0.3",
+  "version": "0.5",
   "icons": { "128": "glasses128.png",
               "48": "glasses48.png"},
   "browser_action": {
