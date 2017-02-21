@@ -44,20 +44,37 @@ function setValues(info){
   document.getElementById("on-click").style.display = "none";
   document.getElementById("reset").style.display = "block";
   i = 0;
+  var bgOriginalColors = ['rgba(7, 0, 128, 0.9)',
+                          'rgba(33, 17, 103, 0.8)',
+                          'rgba(51, 31, 79, 0.8)',
+                          'rgba(63, 77, 111, 0.6)',
+                          'rgba(107, 97, 140, 0.5)'];
+  var borderOriginalColors = ['rgba(7, 0, 128, 1)',
+                          'rgba(33, 17, 103, 1)',
+                          'rgba(51, 31, 79, 1)',
+                          'rgba(63, 77, 111, 1)',
+                          'rgba(107, 97, 140, 1)'];
   var labels = [];
   var data = [];
+  var bgColors = [];
+  var borderColors = [];
   var date;
   console.log(JSON.stringify(info))
   for(var obj in info){
     if(info[obj].name === 'datejay'){
       date = info[obj].count
+      var label = 'Top 5 site visits from '+date
+      document.getElementById("label").innerHTML = label
     }
     else{
+      bgColors.push(bgOriginalColors[obj])
+      borderColors.push(borderOriginalColors[obj])
       labels.push(info[obj].name)
       data.push(info[obj].count)
     }
-    //document.getElementById("tick"+ ++i).innerHTML = info[obj].name +" : " +info[obj].count
   }
+
+
   if(info != undefined && info.length > 0) {
     var ctx = document.getElementById("chartContainer").getContext('2d');
     var myChart = new Chart(ctx, {
@@ -65,11 +82,16 @@ function setValues(info){
       data: {
         labels: labels,
         datasets: [{
-          label: 'Top 5 site visits from '+date,
+          backgroundColor: bgColors,
+          borderColor: borderColors,
+          borderWidth: 2,
           data: data
         }]
       },
       options:{
+        legend:{
+            display: false
+        },
         scales: {
         yAxes: [{
             display: true,
@@ -88,3 +110,7 @@ function setValues(info){
     document.getElementById("message").innerHTML = "Start by browsing!"
   }
 }
+
+var randomColorGenerator = function () {
+    return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+};
